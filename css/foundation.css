@@ -6206,3 +6206,19 @@ th.hide-for-touch {
 	margin-right: auto;
 	max-width: initial;
 }
+
+#scoreRow {
+  background-color: #008CBA;
+}
+
+.largeFont {
+  font-size: 42px;
+}
+
+.largerFont {
+  font-size: 52px;
+}
+
+.largestFont {
+  font-size: 72px;
+}
