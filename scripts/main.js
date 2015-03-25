@@ -15,6 +15,21 @@ var players = [];
 
 function prepScreen() {
 	$("#fieldPositions").hide();
+	$("#batting").hide();
+	$("#nextBatting").hide();
+	$("#gameInning").hide();
+	$("#playerAbsent").show();
+
+	for (var i = 0; i < players.length; i++) {
+		var playerDiv = '<div class="small-9 column" id="player.' + i + '">' +
+			'<h2>' + players[i][1] + " " + players[i][0] + '</h2>' +
+			'</div>' +
+			'<div class="switch round large small-3 columns">' +
+			'<input id="present.' + i + '" type="checkbox" />' +
+			'<label for="present.' + i + '"></label>' +
+			'</div>';
+		$('#playerAbsent').append(playerDiv);
+	}
 }
 
 function determineHome() {
@@ -31,16 +46,18 @@ function determineHome() {
 
 function weBat() {
 	$("#fieldPositions").hide();
+	$("#playerAbsent").hide();
 	$("#batting").show();
 	$("#nextBatting").show();
 	$("#gameInning").show();
 }
 
 function weField() {
+	$("#playerAbsent").hide();
 	$("#batting").hide();
 	$("#nextBatting").hide();
-	$("#gameInning").hide();
 	$("#fieldPositions").show();
+	$("#gameInning").show();
 }
 
 function strikeBtnClick() {
