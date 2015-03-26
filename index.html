@@ -64,15 +64,11 @@
 				<fieldset id="playerAbsent">
 					<legend class="largerFont">Players Present:</legend>
 				</fieldset>
-				<fieldset>
+				<fieldset id="weAre">
 					<legend class="largerFont">We Are:</legend>
 					<div class="row">
-						<div class="small-4 columns"><h3>Visitors</h3></div>
-						<div class="switch round large small-3 columns">
-							<input id="homeTeam" name="homeVisitor" type="checkbox" />
-							<label for="homeTeam"></label>
-						</div>
-						<div class="small-4 columns"><h3>Home</h3></div>
+						<div class="small-5 columns fa fa-check-circle largerFont" id="visitorTeam">Visitors</div>
+						<div class="small-5 columns fa fa-check-circle largerFont" id="homeTeam">Home</div>
 					</div>
 				</fieldset>
 			</div>
@@ -183,6 +179,7 @@
 		</div>
 
 		<!-- SCRIPTS -->
+			<script src="scripts/modernizr.js"></script>
 			<script src="scripts/jquery-2.1.3.min.js"></script>
 			<script src="scripts/main.js"></script>
 	</body>

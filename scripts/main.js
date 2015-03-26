@@ -7,11 +7,9 @@
 
 "use strict";
 
-/** @type {boolean} */
-var weAreHomeTeam;
-
 /** @type {Array}.<string> */
-var players = [];
+var players = [],
+	presentPlayers = [];
 
 function prepScreen() {
 	$("#fieldPositions").hide();
@@ -29,22 +27,39 @@ function prepScreen() {
 			'<label for="present.' + i + '"></label>' +
 			'</div>';
 		$('#playerAbsent').append(playerDiv);
+		setPresentPlayers(i);
 	}
 }
 
-function determineHome() {
-	$("#homeTeam").change(function() {
-		if ($("#homeTeam").is(":checked")) {
-			weAreHomeTeam = true;
-			weField();
+function setPresentPlayers(playerNum) {
+	/** @type {number} */
+	var counter = 0;
+
+	/** @type {string} */
+	var presentPlayer = "#present." + playerNum;
+
+	$(presentPlayer).on('click', function() {
+		if ($(presentPlayer).is(':checked')) {
+			presentPlayers[counter] = players[playerNum];
+			counter++;
+			console.log(presentPlayers[counter]);
 		} else {
-			weAreHomeTeam = false;
-			weBat();
+			console.log("hi!");
 		}
 	});
 }
 
+function determineHome() {
+	$("#homeTeam").click(function() {
+		weField();
+	});
+	$("#visitorTeam").click(function() {
+		weBat();
+	});
+}
+
 function weBat() {
+	$("#weAre").hide();
 	$("#fieldPositions").hide();
 	$("#playerAbsent").hide();
 	$("#batting").show();
@@ -53,6 +68,7 @@ function weBat() {
 }
 
 function weField() {
+	$("#weAre").hide();
 	$("#playerAbsent").hide();
 	$("#batting").hide();
 	$("#nextBatting").hide();
