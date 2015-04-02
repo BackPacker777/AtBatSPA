@@ -16,7 +16,7 @@
 		<link href="css/foundation.css" rel="stylesheet">
 	</head>
 	<body>
-		<div class="row">
+		<div class="row" id="afterPrep">
 			<div class="small-6 columns" id="offenseDefense">
 				<fieldset id="batting">
 					<legend class="largerFont">Player Batting:</legend>
@@ -61,23 +61,10 @@
 						<h2 class="largeFont text-left">1</h2>
 					</div>
 				</fieldset>
-				<fieldset id="playerAbsent">
-					<legend class="largerFont">Players Present:</legend>
-				</fieldset>
-				<fieldset>
-					<legend class="largerFont">We Are:</legend>
-					<div class="row">
-						<div class="small-4 columns"><h3>Visitors</h3></div>
-						<div class="switch round large small-3 columns">
-							<input id="homeTeam" name="homeVisitor" type="checkbox" />
-							<label for="homeTeam"></label>
-						</div>
-						<div class="small-4 columns"><h3>Home</h3></div>
-					</div>
-				</fieldset>
 			</div>
+
 			<br>
-			<div class="small-6 columns right">
+			<div class="small-6 columns right" id="rightPane">
 				<div class="row">
 					<div class="small-6 columns">
 						<div class="small-1 columns right" id="strikeCount"><h1 class="largerFont">0</h1></div>
@@ -149,6 +136,24 @@
 				</div>
 			</div>
 		</div>
+
+		<div class="row" id="gamePrep">
+			<fieldset id="playerAbsent">
+				<legend class="largerFont">Players Present:</legend>
+			</fieldset>
+			<fieldset>
+				<legend class="largerFont">We Are:</legend>
+				<div class="row">
+					<div class="small-5 columns">
+						<button class="button round left large full-width small-10 columns left" id="visitorBtn">VISTOR</button>
+					</div>
+					<div class="small-5 columns">
+						<button class="button round left large full-width small-10 columns right" id="homeBtn">HOME</button>
+					</div>
+				</div>
+			</fieldset>
+		</div>
+
 		<br>
 		<br>
 		<div class="row" id="scoreRow">
