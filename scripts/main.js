@@ -3,7 +3,7 @@
  *   VERSION: 1.0
  *   CREATED: 3.23.2015
  *   PROJECT: At Bat!
- *   TODO: Finish undo buton; Fix inning switch (rotate players);
+ *   TODO: Finish undo button; Fix rotate players;
  */
 
 "use strict";
@@ -96,8 +96,8 @@ function setBatters() {
 		onDeck1 = '<h2 class="largeFont">' + batters[1] + '</h2>' +
 				'<h2 class="largeFont">' + batters[2] + '</h2>' +
 				'<h2 class="largeFont">' + batters[3] + '</h2>';
-	$('#currentBatter').append(batter);
-	$('#onDeck').append(onDeck1);
+	$('#currentBatter').html(batter);
+	$('#onDeck').html(onDeck1);
 }
 
 function setFielders() {
@@ -119,7 +119,7 @@ function setFielders() {
 	if (fielders >= 9) {
 		positions = positions + '<h2 class="largeFont"><strong>CF2 =</strong> ' + fielders[9] + '</h2>';
 	}
-	$('#positions').append(positions);
+	$('#positions').html(positions);
 }
 
 function setInning() {
@@ -152,6 +152,9 @@ function setOuts() {
 	if (outs < MAX_OUTS) {
 		outs++;
 		$("#outCount").text(outs);
+		if (weScore === true) {
+			weBat();
+		}
 	} else {
 		outs = 0;
 		$("#outCount").text(outs);
@@ -162,9 +165,9 @@ function setOuts() {
 		setWeScore();
 		setInning();
 		if (weScore === true) {
-			weField();
-		} else {
 			weBat();
+		} else {
+			weField();
 		}
 	}
 }
