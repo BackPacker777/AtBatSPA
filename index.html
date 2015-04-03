@@ -17,40 +17,18 @@
 	</head>
 	<body>
 		<div class="row" id="afterPrep">
-			<div class="small-6 columns" id="offenseDefense">
+			<div class="small-8 columns left" id="offenseDefense">
 				<fieldset id="batting">
 					<legend class="largerFont">Player Batting:</legend>
-					<div id="batter">
-						<h2 class="largeFont">Kenan Bates</h2>
-					</div>
+					<div id="currentBatter"></div>
 				</fieldset>
 				<fieldset id="nextBatting">
 					<legend class="largerFont">On Deck:</legend>
-					<div id="onDeck">
-						<h2 class="largeFont">Alan Elya</h2>
-						<h2 class="largeFont">Conner Meengs</h2>
-					</div>
+					<div id="onDeck"></div>
 				</fieldset>
 				<fieldset id="fieldPositions">
 					<legend class="largerFont">Field Positions:</legend>
-					<div class="small-9 column" id="player1">
-						<h2>Kenan Bates</h2>
-					</div>
-					<div class="small-2 column right" id="position1">
-						<h2>Pi</h2>
-					</div>
-					<div class="small-9 column" id="player2">
-						<h2>Conner Meengs</h2>
-					</div>
-					<div class="small-2 column right" id="position2">
-						<h2>1B</h2>
-					</div>
-					<div class="small-9 column" id="player3">
-						<h2>Alan Elya</h2>
-					</div>
-					<div class="small-2 column right" id="position3">
-						<h2>2B</h2>
-					</div>
+					<div class="small-9 column" id="positions"></div>
 				</fieldset>
 				<fieldset id="gameInning">
 					<legend class="largerFont">Inning:</legend>
@@ -64,62 +42,62 @@
 			</div>
 
 			<br>
-			<div class="small-6 columns right" id="rightPane">
+			<div class="small-4 columns right" id="rightPane">
 				<div class="row">
-					<div class="small-6 columns">
+					<div class="small-4 columns">
 						<div class="small-1 columns right" id="strikeCount"><h1 class="largerFont">0</h1></div>
 					</div>
-					<div class="small-5 columns">
+					<div class="small-7 columns">
 						<button class="button round large full-width small-10 columns" id="strikeBtn">STRIKE</button>
 					</div>
 				</div>
 				<br>
 				<br>
 				<div class="row">
-					<div class="small-6 columns">
+					<div class="small-4 columns">
 						<div class="small-1 columns right" id="ballCount"><h1 class="largerFont">0</h1></div>
 					</div>
-					<div class="small-5 columns">
+					<div class="small-7 columns">
 						<button class="button round left large full-width small-10 columns" id="ballBtn">BALL</button>
 					</div>
 				</div>
 				<br>
 				<br>
 				<div class="row">
-					<div class="small-6 columns">
+					<div class="small-4 columns">
 						<div class="small-1 columns right" id="foulCount"><h1 class="largerFont">0</h1></div>
 					</div>
-					<div class="small-5 columns">
+					<div class="small-7 columns">
 						<button class="button round left large full-width small-10 columns" id="foulBtn">FOUL</button>
 					</div>
 				</div>
 				<br>
 				<br>
 				<div class="row">
-					<div class="small-6 columns">
+					<div class="small-4 columns">
 						<div class="small-1 columns right" id="outCount"><h1 class="largerFont">0</h1></div>
 					</div>
-					<div class="small-5 columns">
+					<div class="small-7 columns">
 						<button class="button round left large full-width small-10 columns" id="outBtn">OUT</button>
 					</div>
 				</div>
 				<br>
 				<br>
 				<div class="row">
-					<div class="small-6 columns">
+					<div class="small-4 columns">
 						<div class="small-1 columns right" id="runCount"><h1 class="largerFont">0</h1></div>
 					</div>
-					<div class="small-5 columns">
+					<div class="small-7 columns">
 						<button class="button round left large full-width small-10 columns" id="runBtn">RUN</button>
 					</div>
 				</div>
 				<br>
 				<br>
 				<div class="row">
-					<div class="small-6 columns">
+					<div class="small-4 columns">
 						<div class="small-1 columns right"></div>
 					</div>
-					<div class="small-5 columns">
+					<div class="small-7 columns">
 						<button class="button round success left large full-width small-10 columns" id="baseBtn">BASE</button>
 					</div>
 				</div>
@@ -127,10 +105,10 @@
 				<br>
 				<br>
 				<div class="row">
-					<div class="small-6 columns">
+					<div class="small-4 columns">
 						<div class="small-1 columns right"></div>
 					</div>
-					<div class="small-5 columns">
+					<div class="small-7 columns">
 						<button class="button round alert left large full-width small-10 columns" id="undoBtn">UNDO</button>
 					</div>
 				</div>
