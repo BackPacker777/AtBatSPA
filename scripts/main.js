@@ -20,7 +20,6 @@ var players = [],
 function prepScreen() {
 	$("#afterPrep").hide();
 	$("#gamePrep").show();
-
 	for (var i = 0; i < players.length; i++) {
 		var playerDiv = '<div class="small-9 column" id="player.' + i + '">' +
 			'<h2>' + players[i][1] + " " + players[i][0] + '</h2>' +
@@ -42,7 +41,7 @@ function setPresentPlayers() {
 		if ($(event.target).is(':checked')) {
 			presentPlayers[player[1]] = players[player[1]][1] + ' ' + players[player[1]][0]; //http://www.i-programmer.info/programming/javascript/1441-javascript-data-structures-the-associative-array.html
 		} else {
-			presentPlayers = presentPlayers.splice(player[1], 1);
+			delete presentPlayers[player[1]]; //http://stackoverflow.com/questions/1784267/remove-element-from-javascript-associative-array-using-array-value
 		}
 	});
 }
@@ -85,7 +84,6 @@ function setBatters() {
 			batters.push(presentPlayers[player]);
 		}
 	}
-	batters = presentPlayers;
 	batters.unshift(batters.pop());
 	var batter = '<h2 class="largeFont">' + batters[0] + '</h2>';
 	$('#currentBatter').append(batter);
@@ -93,7 +91,6 @@ function setBatters() {
 				'<h2 class="largeFont">' + batters[2] + '</h2>' +
 				'<h2 class="largeFont">' + batters[3] + '</h2>';
 	$('#onDeck').append(onDeck1);
-
 }
 
 function setFielders() {

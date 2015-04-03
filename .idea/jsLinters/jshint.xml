@@ -3,9 +3,9 @@
   <component name="JSHintConfiguration" version="2.6.3" use-config-file="false">
     <option asi="false" />
     <option bitwise="true" />
-    <option boss="false" />
+    <option boss="true" />
     <option browser="true" />
-    <option camelcase="false" />
+    <option camelcase="true" />
     <option couch="false" />
     <option curly="true" />
     <option debug="false" />
