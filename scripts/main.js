@@ -3,7 +3,7 @@
  *   VERSION: 1.0
  *   CREATED: 3.23.2015
  *   PROJECT: At Bat!
- *   TODO: Fix changing player to absent from present;
+ *   TODO: Add logic for all game buttons;
  */
 
 "use strict";
