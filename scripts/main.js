@@ -3,13 +3,13 @@
  *   VERSION: 1.0
  *   CREATED: 3.23.2015
  *   PROJECT: At Bat!
- *   TODO: Finish undo button; Fix rotate players;
+ *   TODO: Finish undo button;
  */
 
 "use strict";
 
 /** @type {boolean} */
-var weAreHomeTeam, inningTop, weScore;
+var weAreHomeTeam, inningTop, weScore, didSetStrikes;
 
 /** @type {Array}.<string> */
 var players = [],
@@ -89,7 +89,9 @@ function setBatters() {
 			batters.push(presentPlayers[player]);
 		}
 	}
-	batters.unshift(batters.pop());
+	/** @type {string} */
+	var temp = batters.shift(); //rotate array
+	batters.push(temp); //rotate array
 
 	/** @type {string} */
 	var batter = '<h2 class="largeFont">' + batters[0] + '</h2>',
@@ -106,7 +108,9 @@ function setFielders() {
 			fielders.push(presentPlayers[player]);
 		}
 	}
-	fielders.unshift(fielders.pop());
+	/** @type {string} */
+	var temp = fielders.shift(); //rotate array
+	fielders.push(temp); //rotate array
 	var positions = '<h2 class="largeFont"><strong>C =</strong> ' + fielders[0] + '</h2>' +
 			'<h2 class="largeFont"><strong>P =</strong> ' + fielders[1] + '</h2>' +
 			'<h2 class="largeFont"><strong>1B =</strong> ' + fielders[2] + '</h2>' +
@@ -141,7 +145,7 @@ function setInning() {
 	}
 }
 
-function setOuts() {
+function setOuts(increase) {
 	/** @constant */
 	var MAX_OUTS = 2;
 
@@ -149,14 +153,18 @@ function setOuts() {
 		outs = 0;
 	}
 
-	if (outs < MAX_OUTS) {
+	if (outs < MAX_OUTS && increase === true) {
 		outs++;
 		$("#outCount").text(outs);
-		if (weScore === true) {
-			weBat();
-		}
-	} else {
+	} else if (outs > 0 && increase === false) {
+		outs--;
+		$("#outCount").text(outs);
+	} else if (outs >= MAX_OUTS && increase === true) {
 		outs = 0;
+		runs = 0;
+		strikes = 0;
+		fouls = 0;
+		balls = 0;
 		$("#outCount").text(outs);
 		$("#strikeCount").text(0);
 		$("#foulCount").text(0);
@@ -172,7 +180,7 @@ function setOuts() {
 	}
 }
 
-function setStrikes() {
+function setStrikes(increase) {
 	/** @constant */
 	var MAX_STRIKES = 2;
 
@@ -180,37 +188,64 @@ function setStrikes() {
 		strikes = 0;
 	}
 
-	if (strikes < MAX_STRIKES) {
+	if (strikes < MAX_STRIKES && increase === true) {
 		strikes++;
 		$("#strikeCount").text(strikes);
-	} else {
+	} else if (strikes > 0 && increase === false) {
+		strikes--;
+		$("#strikeCount").text(strikes);
+	} else if (strikes >= MAX_STRIKES && increase === true) {
 		setOuts();
 		strikes = 0;
 		$("#strikeCount").text(strikes);
 		$("#foulCount").text(strikes);
 		$("#ballCount").text(strikes);
+		if (weScore === true) {
+			setBatters();
+		}
 	}
 }
 
-function setFouls() {
+function setFouls(increase) {
 	/** @constant */
 	var MAX_FOULS = 2;
+
+	if (didSetStrikes === undefined) {
+		didSetStrikes = false;
+	}
 
 	if (!fouls) {
 		fouls = 0;
 	}
 
-	if (fouls < MAX_FOULS) {
-		setStrikes();
+	if (!strikes) {
+		strikes = 0;
+	}
+
+	if (strikes < MAX_FOULS && increase === true) {
+		didSetStrikes = true;
+		setStrikes(increase);
 		fouls++;
 		$("#foulCount").text(fouls);
-	} else {
+		alert(didSetStrikes);
+	} else if (strikes >= MAX_FOULS && increase === true) {
+		didSetStrikes = false;
 		fouls++;
 		$("#foulCount").text(fouls);
+		alert(didSetStrikes);
+	} else if (fouls > 0 && increase === false && didSetStrikes === true) {
+		fouls--;
+		$("#foulCount").text(fouls);
+		setStrikes(increase);
+		alert(didSetStrikes);
+	} else if (fouls > 0 && increase === false && didSetStrikes === false) {
+		fouls--;
+		$("#foulCount").text(fouls);
+		alert(didSetStrikes);
 	}
 }
 
-function setBalls() {
+function setBalls(increase) {
 	/** @constant */
 	var MAX_BALLS = 3;
 
@@ -218,29 +253,37 @@ function setBalls() {
 		balls = 0;
 	}
 
-	if (balls < MAX_BALLS) {
+	if (balls < MAX_BALLS && increase === true) {
 		balls++;
 		$("#ballCount").text(balls);
-	} else {
+	} else if (balls > 0 && increase === false) {
+		balls--;
+		$("#ballCount").text(balls);
+	} else if (balls >= MAX_BALLS && increase === true) {
 		balls = 0;
-		setRuns();
 		$("#strikeCount").text(balls);
 		$("#foulCount").text(balls);
 		$("#ballCount").text(balls);
 	}
 }
 
-function setScore() {
+function setScore(increase) {
 	if (usScore === undefined && opponentScore === undefined) {
 		usScore = 0;
 		opponentScore = 0;
 		$("#usScore").html('<h2 class="text-center largestFont text-center">' + usScore + '</h2>');
 		$("#opponentScore").html('<h2 class="text-center largestFont text-center">' + opponentScore + '</h2>');
-	} else if (weScore === true) {
+	} else if (weScore === true && increase === true) {
 		usScore++;
 		$("#usScore").html('<h2 class="text-center largestFont text-center">' + usScore + '</h2>');
-	} else {
+	} else if (weScore === true && increase === false) {
+		usScore--;
+		$("#usScore").html('<h2 class="text-center largestFont text-center">' + usScore + '</h2>');
+	} else if (weScore === false && increase === true) {
 		opponentScore++;
+		$("#opponentScore").html('<h2 class="text-center largestFont text-center">' + opponentScore + '</h2>');
+	} else if (weScore === false && increase === false) {
+		opponentScore--;
 		$("#opponentScore").html('<h2 class="text-center largestFont text-center">' + opponentScore + '</h2>');
 	}
 }
@@ -261,42 +304,99 @@ function setUndo() {
 
 }
 
-function setRuns() {
+function setRuns(increase) {
 	if (!runs) {
 		runs = 0;
 	}
-	runs++;
-	$("#runCount").text(runs);
-	setScore();
+
+	if (increase === true) {
+		runs++;
+		$("#runCount").text(runs);
+		setScore(increase);
+	} else if (runs > 0 && increase === false) {
+		runs--;
+		$("#runCount").text(runs);
+		setScore(increase);
+	}
 }
 
 function strikeBtnClick() {
 	$("#strikeBtn").click(function() {
-		setStrikes();
+		/** @type {boolean} */
+		var increase = true;
+		setStrikes(increase);
+	});
+}
+
+function strikeNumClick() {
+	$("#strikeCount").click(function() {
+		/** @type {boolean} */
+		var increase = false;
+		setStrikes(increase);
+	});
+}
+
+function ballNumClick() {
+	$("#ballCount").click(function() {
+		/** @type {boolean} */
+		var increase = false;
+		setBalls(increase);
 	});
 }
 
 function ballBtnClick() {
+	/** @type {boolean} */
+	var increase = true;
 	$("#ballBtn").click(function() {
-		setBalls();
+		setBalls(increase);
+	});
+}
+
+function foulNumClick() {
+	$("#foulCount").click(function() {
+		/** @type {boolean} */
+		var increase = false;
+		setFouls(increase);
 	});
 }
 
 function foulBtnClick() {
+	/** @type {boolean} */
+	var increase = true;
 	$("#foulBtn").click(function() {
-		setFouls();
+		setFouls(increase);
+	});
+}
+
+function outNumClick() {
+	$("#outCount").click(function() {
+		/** @type {boolean} */
+		var increase = false;
+		setOuts(increase);
 	});
 }
 
 function outBtnClick() {
+	/** @type {boolean} */
+	var increase = true;
 	$("#outBtn").click(function() {
-		setOuts();
+		setOuts(increase);
+	});
+}
+
+function runNumClick() {
+	$("#runCount").click(function() {
+		/** @type {boolean} */
+		var increase = false;
+		setRuns(increase);
 	});
 }
 
 function runBtnClick() {
+	/** @type {boolean} */
+	var increase = true;
 	$("#runBtn").click(function() {
-		setRuns();
+		setRuns(increase);
 	});
 }
 
@@ -308,6 +408,9 @@ function baseBtnClick() {
 		$("#strikeCount").text(strikes);
 		$("#foulCount").text(fouls);
 		$("#ballCount").text(balls);
+		if (weScore === true) {
+			setBatters();
+		}
 	});
 
 }
@@ -342,10 +445,15 @@ window.onload = function() {
 	setInning();
 	setScore();
 	strikeBtnClick();
+	strikeNumClick();
 	ballBtnClick();
+	ballNumClick();
 	foulBtnClick();
+	foulNumClick();
 	outBtnClick();
+	outNumClick();
 	runBtnClick();
+	runNumClick();
 	baseBtnClick();
 	undoBtnClick();
 };
