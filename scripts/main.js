@@ -15,7 +15,8 @@ var weAreHomeTeam, inningTop, weScore, didSetStrikes;
 var players = [],
 	presentPlayers = [],
 	fielders = [],
-	batters = [];
+	batters = [],
+	screenValues = [];
 
 /** @type {number} */
 var outs, strikes, fouls, balls, runs, usScore, opponentScore, inning;
@@ -35,6 +36,7 @@ function prepScreen() {
 		$('#playerAbsent').append(playerDiv);
 	}
 	setPresentPlayers();
+	outs = 0; strikes = 0; fouls = 0; balls = 0; runs = 0;
 }
 
 function setPresentPlayers() {
@@ -96,8 +98,8 @@ function setBatters() {
 	/** @type {string} */
 	var batter = '<h2 class="largeFont">' + batters[0] + '</h2>',
 		onDeck1 = '<h2 class="largeFont">' + batters[1] + '</h2>' +
-				'<h2 class="largeFont">' + batters[2] + '</h2>' +
-				'<h2 class="largeFont">' + batters[3] + '</h2>';
+			'<h2 class="largeFont">' + batters[2] + '</h2>' +
+			'<h2 class="largeFont">' + batters[3] + '</h2>';
 	$('#currentBatter').html(batter);
 	$('#onDeck').html(onDeck1);
 }
@@ -112,14 +114,14 @@ function setFielders() {
 	var temp = fielders.shift(); //rotate array
 	fielders.push(temp); //rotate array
 	var positions = '<h2 class="largeFont"><strong>C =</strong> ' + fielders[0] + '</h2>' +
-			'<h2 class="largeFont"><strong>P =</strong> ' + fielders[1] + '</h2>' +
-			'<h2 class="largeFont"><strong>1B =</strong> ' + fielders[2] + '</h2>' +
-			'<h2 class="largeFont"><strong>2B =</strong> ' + fielders[3] + '</h2>' +
-			'<h2 class="largeFont"><strong>3B =</strong> ' + fielders[4] + '</h2>' +
-			'<h2 class="largeFont"><strong>SS =</strong> ' + fielders[5] + '</h2>' +
-			'<h2 class="largeFont"><strong>LF =</strong> ' + fielders[6] + '</h2>' +
-			'<h2 class="largeFont"><strong>CF =</strong> ' + fielders[7] + '</h2>' +
-			'<h2 class="largeFont"><strong>RF =</strong> ' + fielders[8] + '</h2>';
+		'<h2 class="largeFont"><strong>P =</strong> ' + fielders[1] + '</h2>' +
+		'<h2 class="largeFont"><strong>1B =</strong> ' + fielders[2] + '</h2>' +
+		'<h2 class="largeFont"><strong>2B =</strong> ' + fielders[3] + '</h2>' +
+		'<h2 class="largeFont"><strong>3B =</strong> ' + fielders[4] + '</h2>' +
+		'<h2 class="largeFont"><strong>SS =</strong> ' + fielders[5] + '</h2>' +
+		'<h2 class="largeFont"><strong>LF =</strong> ' + fielders[6] + '</h2>' +
+		'<h2 class="largeFont"><strong>CF =</strong> ' + fielders[7] + '</h2>' +
+		'<h2 class="largeFont"><strong>RF =</strong> ' + fielders[8] + '</h2>';
 	if (fielders >= 9) {
 		positions = positions + '<h2 class="largeFont"><strong>CF2 =</strong> ' + fielders[9] + '</h2>';
 	}
@@ -195,7 +197,7 @@ function setStrikes(increase) {
 		strikes--;
 		$("#strikeCount").text(strikes);
 	} else if (strikes >= MAX_STRIKES && increase === true) {
-		setOuts();
+		setOuts(increase);
 		strikes = 0;
 		$("#strikeCount").text(strikes);
 		$("#foulCount").text(strikes);
@@ -227,21 +229,17 @@ function setFouls(increase) {
 		setStrikes(increase);
 		fouls++;
 		$("#foulCount").text(fouls);
-		alert(didSetStrikes);
 	} else if (strikes >= MAX_FOULS && increase === true) {
 		didSetStrikes = false;
 		fouls++;
 		$("#foulCount").text(fouls);
-		alert(didSetStrikes);
 	} else if (fouls > 0 && increase === false && didSetStrikes === true) {
 		fouls--;
 		$("#foulCount").text(fouls);
 		setStrikes(increase);
-		alert(didSetStrikes);
 	} else if (fouls > 0 && increase === false && didSetStrikes === false) {
 		fouls--;
 		$("#foulCount").text(fouls);
-		alert(didSetStrikes);
 	}
 }
 
@@ -268,7 +266,7 @@ function setBalls(increase) {
 }
 
 function setScore(increase) {
-	if (usScore === undefined && opponentScore === undefined) {
+	if (usScore === undefined && opponentScore === undefined && increase === true) {
 		usScore = 0;
 		opponentScore = 0;
 		$("#usScore").html('<h2 class="text-center largestFont text-center">' + usScore + '</h2>');
@@ -438,12 +436,12 @@ function setPlayersArray() {
 	}
 }
 
-window.onload = function() {
+$(document).ready(function() {
 	setPlayersArray();
 	prepScreen();
 	determineHome();
 	setInning();
-	setScore();
+	setScore(true);
 	strikeBtnClick();
 	strikeNumClick();
 	ballBtnClick();
@@ -456,4 +454,4 @@ window.onload = function() {
 	runNumClick();
 	baseBtnClick();
 	undoBtnClick();
-};
+});
