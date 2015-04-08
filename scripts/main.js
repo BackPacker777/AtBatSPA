@@ -262,6 +262,9 @@ function setBalls(increase) {
 		$("#strikeCount").text(balls);
 		$("#foulCount").text(balls);
 		$("#ballCount").text(balls);
+		if (weScore === true) {
+			setBatters();
+		}
 	}
 }
 
